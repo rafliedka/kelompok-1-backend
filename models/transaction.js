@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      transaction.belongsToMany(user, {
+        foreignKey: 'user_id'
+      });
+      transaction.belongsTo(product, {
+        foreignKey: 'product_id'
+      });
     }
   }
   transaction.init({
@@ -23,21 +29,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'transaction',
   });
-  transaction.associate = models => {
-    transaction.belongsToMany(models.user, {
-      foreignKey: 'id'
-    });
-
-    transaction.belongsTo(models.product, {
-      foreignKey: 'id'
-    });
-  }
-  
-  /* transaction.belongsToMany(user, {
-    foreignKey: 'id'
-  });
-  transaction.belongsTo(product, {
-    foreignKey: 'id'
-  }); */
   return transaction;
 };
