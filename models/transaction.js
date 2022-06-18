@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      transaction.belongsToMany(user, {
+      /* transaction.belongsToMany(user, {
         foreignKey: 'user_id'
       });
       transaction.belongsTo(product, {
         foreignKey: 'product_id'
-      });
+      }); */
     }
   }
   transaction.init({

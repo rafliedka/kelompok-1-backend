@@ -62,3 +62,7 @@ typings/
 
 #config json
 config.json
+
+#package
+yarn.lock
+package-lock.json
