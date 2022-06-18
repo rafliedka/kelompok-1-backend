@@ -6,13 +6,16 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "sequelize": "^6.20.1"
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "sequelize-cli": "^6.4.1"
