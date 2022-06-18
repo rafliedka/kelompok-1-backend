@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 const transaction = require('./transaction');
 const user = require('./user');
 module.exports = (sequelize, DataTypes) => {
@@ -13,19 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      product.belongsTo(user)
-      product.hasOne(transaction);
-      return product;
+      product.belongsTo(models.user);
+      product.hasOne(models.transaction);
     }
   }
-  product.init({
-    name: DataTypes.STRING,
-    image: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    category: DataTypes.STRING,
-    user_id: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'product',
-  });
+  product.init(
+    {
+      name: DataTypes.STRING,
+      image: DataTypes.STRING,
+      price: DataTypes.INTEGER,
+      category: DataTypes.STRING,
+      user_id: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'product',
+    }
+  );
+  return product;
 };
