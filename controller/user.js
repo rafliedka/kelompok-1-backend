@@ -13,7 +13,7 @@ module.exports = class {
       .then((User) => {
         if (!User) {
           user
-            .create(req.body)
+            .create({...req.body, role: 'buyer'})
             .then((result) => {
               res.status(201).send({
                 status: 201,
