@@ -1,9 +1,6 @@
-'use strict';
-
-const user = require("../models/user");
-
+'use strict'
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     await queryInterface.createTable('products', {
       id: {
         allowNull: false,
@@ -12,6 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        type: Sequelize.STRING
+      },
+      description: {
         type: Sequelize.STRING
       },
       image: {
@@ -24,7 +24,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'users'
+          },
+          key: 'id'
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -34,9 +41,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('products');
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('products')
   }
-};
+}

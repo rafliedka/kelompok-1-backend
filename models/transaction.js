@@ -1,7 +1,5 @@
-'use strict';
-const { Model } = require('sequelize');
-const product = require('./product');
-const user = require('./user');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class transaction extends Model {
     /**
@@ -9,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate (models) {
       // define association here
     }
   }
@@ -17,12 +15,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       user_id: DataTypes.INTEGER,
       product_id: DataTypes.INTEGER,
-      created_at: DataTypes.DATE,
+      status: DataTypes.STRING,
+      offer: DataTypes.INTEGER
     },
     {
       sequelize,
-      modelName: 'transaction',
+      modelName: 'transaction'
     }
-  );
-  return transaction;
-};
+  )
+  /* transaction.associate = function (Model) {
+    transaction.hasOne(Model.product)
+    transaction.belongsTo(Model.user)
+  } */
+  return transaction
+}
