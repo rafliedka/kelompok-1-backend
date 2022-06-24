@@ -1,10 +1,12 @@
-const { user } = require('../models')
+const {
+  user
+} = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('../helper/jwt')
 
 module.exports = class {
   // get user data
-  static async getAllUser (req, res) {
+  static async getAllUser(req, res) {
     try {
       const result = await user.findAll()
       res.status(200).json({
@@ -17,9 +19,13 @@ module.exports = class {
   }
 
   // fetch id user
-  static async fetchUserId (req, res) {
+  static async fetchUserId(req, res) {
     try {
-      const result = await user.findOne({ where: { id: req.params.id } })
+      const result = await user.findOne({
+        where: {
+          id: req.params.id
+        }
+      })
       res.status(200).json({
         status: 200,
         data: result
@@ -30,8 +36,15 @@ module.exports = class {
   }
 
   // update user
-  static async updateUser (req, res) {
-    await user.update({ ...req.body }, { where: { id: req.params.id }, returning: true })
+  static async updateUser(req, res) {
+    await user.update({
+      ...req.body
+    }, {
+      where: {
+        id: req.params.id
+      },
+      returning: true
+    })
     try {
       res.status(201).json({
         status: 201,
@@ -43,8 +56,12 @@ module.exports = class {
     }
   }
 
-  static async deleteUser (req, res) {
-    await user.destroy({ where: { id: req.params.id } })
+  static async deleteUser(req, res) {
+    await user.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
     try {
       res.status(204).json({
         staus: 204,
@@ -59,7 +76,7 @@ module.exports = class {
   }
 
   // Register
-  static regisUser (req, res, next) {
+  static regisUser(req, res, next) {
     user
       .findOne({
         where: {
@@ -69,7 +86,10 @@ module.exports = class {
       .then((User) => {
         if (!User) {
           user
-            .create({ ...req.body, role: 'buyer' })
+            .create({
+              ...req.body,
+              role: 'buyer'
+            })
             .then((result) => {
               res.status(201).send({
                 status: 201,
@@ -81,7 +101,9 @@ module.exports = class {
               res.status(400).send(err)
             })
         } else {
-          res.status(400).send({ massage: 'User Already Exist' })
+          res.status(400).send({
+            massage: 'User Already Exist'
+          })
         }
       })
       .catch((err) => {
@@ -90,7 +112,7 @@ module.exports = class {
   }
 
   // Login
-  static async loginUser (req, res, next) {
+  static async loginUser(req, res, next) {
     try {
       // check user with email
       const users = await user.findOne({
