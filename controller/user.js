@@ -1,4 +1,6 @@
-const { user } = require('../models');
+const {
+  user
+} = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('../helper/jwt');
 
@@ -14,7 +16,10 @@ module.exports = class {
       .then((User) => {
         if (!User) {
           user
-            .create({...req.body, role: 'buyer'})
+            .create({
+              ...req.body,
+              role: 'buyer'
+            })
             .then((result) => {
               res.status(201).send({
                 status: 201,
@@ -26,7 +31,9 @@ module.exports = class {
               res.status(400).send(err);
             });
         } else {
-          res.status(400).send({ massage: 'User Already Exist' });
+          res.status(400).send({
+            massage: 'User Already Exist'
+          });
         }
       })
       .catch((err) => {
