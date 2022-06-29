@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
   /* product.associate = function (Model) {
-    product.hasOne(Model.transaction)
+    product.hasOne(Model.transaction, { foreignKey: 'product_id' })
     product.belongsTo(Model.user)
   } */
   return product

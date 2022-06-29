@@ -25,8 +25,16 @@ module.exports = class {
     }
   }
 
+  // user yang sama ga bisa update lebih dari 5 kali
   static async addProduct (req, res) {
-    const result = await product.create(req.body)
+    const result = await product.create({
+      name: req.body.name,
+      description: req.body.description,
+      image: req.body.image,
+      price: req.body.price,
+      category: req.body.category,
+      user_id: req.body.user_id
+    })
     try {
       res.status(201).json({
         status: 201,
