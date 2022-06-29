@@ -1,15 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const ProductController = require('../controller/product')
+const sellerAuth = require('../middleware/isSeller')
 
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
-router.get('/', ProductController.getAllProduct)
-router.get('/:id', ProductController.getProductById)
-router.post('/', ProductController.addProduct)
-router.put('/:id', ProductController.updateProduct)
-router.delete('/:id', ProductController.deleteProduct)
+router.get('/', sellerAuth, ProductController.getAllProduct)
+router.get('/:id', sellerAuth, ProductController.getProductById)
+router.post('/', sellerAuth, ProductController.addProduct)
+router.put('/:id', sellerAuth, ProductController.updateProduct)
+router.delete('/:id', sellerAuth, ProductController.deleteProduct)
 
 module.exports = router

@@ -1,6 +1,6 @@
 'use strict'
 const { Model } = require('sequelize')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -23,18 +23,18 @@ module.exports = (sequelize, DataTypes) => {
       role: DataTypes.ENUM('buyer', 'seller')
     },
     {
-      hooks: {
+      /* hooks: {
         beforeCreate: (record, options) => {
           record.password = bcrypt.hashSync(record.password, 10)
         }
-      },
+      }, */
       sequelize,
       modelName: 'user'
     }
   )
   /* user.associate = function (Model) {
-    user.hasMany(Model.transaction)
-    user.belongsTo(Model.product)
+    user.hasMany(Model.transaction, { foreignKey: 'user_id' })
+    user.belongsTo(Model.product, { foreignKey: 'user_id' })
   } */
   return user
 }
