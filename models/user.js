@@ -32,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'user'
     }
   )
-  /* user.associate = function (Model) {
-    user.hasMany(Model.transaction, { foreignKey: 'user_id' })
-    user.belongsTo(Model.product, { foreignKey: 'user_id' })
-  } */
+  user.associate = function (models) {
+    user.hasMany(models.product, { foreignKey: 'id' })
+    user.hasMany(models.transaction, { foreignKey: 'id' })
+  }
   return user
 }

@@ -1,8 +1,10 @@
-const { product } = require('../models')
+const { product, user } = require('../models')
 
 module.exports = class {
   static async getAllProduct (req, res) {
-    const result = await product.findAll()
+    const result = await product.findAll({
+      include: [{ model: user }]
+    })
     try {
       res.status(200).json({
         status: 200,
@@ -14,7 +16,7 @@ module.exports = class {
   }
 
   static async getProductById (req, res) {
-    const result = await product.findOne({ where: { id: req.params.id } })
+    const result = await product.findOne({ where: { id: req.params.id }, include: [{ model: user }] })
     try {
       res.status(200).json({
         status: 200,
@@ -47,7 +49,14 @@ module.exports = class {
   }
 
   static async updateProduct (req, res) {
-    await product.update({ ...req.body }, { where: { id: req.params.id } })
+    await product.update({
+      name: req.body.name,
+      description: req.body.description,
+      image: req.body.image,
+      price: req.body.price,
+      category: req.body.category,
+      user_id: req.body.user_id
+    }, { where: { id: req.params.id } })
     try {
       res.status(201).json({
         status: 201,

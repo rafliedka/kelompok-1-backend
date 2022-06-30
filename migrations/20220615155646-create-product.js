@@ -25,12 +25,12 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
-        references: {
+        /* references: {
           model: {
             tableName: 'users'
           },
           key: 'id'
-        },
+        }, */
         allowNull: false
       },
       createdAt: {

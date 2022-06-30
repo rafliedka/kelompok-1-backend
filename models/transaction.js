@@ -23,9 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'transaction'
     }
   )
-  /* transaction.associate = function (Model) {
-    transaction.hasOne(Model.product)
-    transaction.belongsTo(Model.user)
-  } */
+  transaction.associate = function (models) {
+    transaction.belongsTo(models.product, { foreignKey: 'product_id' })
+    transaction.belongsTo(models.user, { foreignKey: 'user_id' })
+  }
   return transaction
 }
