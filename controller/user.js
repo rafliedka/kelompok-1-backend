@@ -1,10 +1,12 @@
-const { user } = require('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('../helper/jwt');
+const {
+  user
+} = require('../models')
+const bcrypt = require('bcryptjs')
+const jwt = require('../helper/jwt')
 
 module.exports = class {
   // get user data
-  static async getAllUser(req, res) {
+  static async getAllUser (req, res) {
     try {
       const result = await user.findAll();
       res.status(200).json({
@@ -17,7 +19,7 @@ module.exports = class {
   }
 
   // fetch id user
-  static async fetchUserId(req, res) {
+  static async fetchUserId (req, res) {
     try {
       const result = await user.findOne({
         where: {
@@ -34,32 +36,33 @@ module.exports = class {
   }
 
   // update user
-  static async updateUser(req, res) {
-    user
-      .update(
-        {
-          ...req.body,
-        },
-        {
-          where: {
-            id: req.params.id,
-          },
-          returning: true,
+  // error update ke password yang sama jadi hashing 2 kali
+  static async updateUser (req, res) {
+    try {
+      await user.update({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        contact: req.body.contact,
+        photo: req.body.photo,
+        address: req.body.address,
+        role: 'seller'
+      }, {
+        where: {
+          id: req.params.id
         }
-      )
-      .then((result) => {
-        res.status(201).send({
-          status: 201,
-          message: 'user data has been update',
-          data: result,
-        });
+      })
+      res.status(201).json({
+        status: 201,
+        message: 'user data has been update',
+        data: req.body
       })
       .catch((err) => {
         res.status(400).send(err);
       });
   }
 
-  static async deleteUser(req, res) {
+  static async deleteUser (req, res) {
     await user.destroy({
       where: {
         id: req.params.id,
@@ -79,7 +82,8 @@ module.exports = class {
   }
 
   // Register
-  static regisUser(req, res, next) {
+  static async regisUser (req, res, next) {
+    const passwordHash = await bcrypt.hash(req.body.password, 10)
     user
       .findOne({
         where: {
@@ -90,8 +94,13 @@ module.exports = class {
         if (!User) {
           user
             .create({
-              ...req.body,
-              role: 'buyer',
+              name: req.body.name,
+              email: req.body.email,
+              password: passwordHash,
+              contact: req.body.contact,
+              photo: req.body.photo,
+              address: req.body.address,
+              role: 'buyer'
             })
             .then((result) => {
               res.status(201).send({
@@ -115,7 +124,7 @@ module.exports = class {
   }
 
   // Login
-  static async loginUser(req, res, next) {
+  static async loginUser (req, res, next) {
     try {
       // check user with email
       const users = await user.findOne({
@@ -143,8 +152,8 @@ module.exports = class {
       // generate token user with jwt
       const token = jwt.generateToken({
         email: users.email,
-        role: users.role,
-      });
+        password: users.password
+      })
 
       const secureUser = users.dataValues;
       delete secureUser.password;
@@ -161,4 +170,4 @@ module.exports = class {
       res.status(404).send(error);
     }
   }
-};
+}

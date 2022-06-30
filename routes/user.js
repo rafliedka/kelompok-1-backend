@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const UserController = require('../controller/user');
+const auth = require('../middleware/authentication')
 const isSeller = require('../middleware/isSeller');
 const isBuyer = require('../middleware/isBuyer');
 
@@ -23,6 +24,7 @@ const upload = multer({ storage: storage });
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
+
 router.get('/', UserController.getAllUser);
 router.get('/:id', UserController.fetchUserId);
 router.post('/register', UserController.regisUser);
