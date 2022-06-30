@@ -16,7 +16,7 @@ module.exports = class {
   }
 
   static async getProductById (req, res) {
-    const result = await product.findOne({ where: { id: req.params.id }, include: [{ model: user }] })
+    const result = await product.findOne({ where: { id: req.params.id } })
     try {
       res.status(200).json({
         status: 200,
@@ -27,25 +27,26 @@ module.exports = class {
     }
   }
 
-  // user yang sama ga bisa update lebih dari 5 kali
   static async addProduct (req, res) {
-    const result = await product.create({
-      name: req.body.name,
-      description: req.body.description,
-      image: req.body.image,
-      price: req.body.price,
-      category: req.body.category,
-      user_id: req.body.user_id
-    })
-    try {
-      res.status(201).json({
-        status: 201,
-        message: 'product has been added',
-        data: result
+    product
+      .create({
+        name: req.body.name,
+        image: req.file.path,
+        price: req.body.price,
+        category: req.body.category,
+        description: req.body.description,
+        user_id: req.body.user_id
       })
-    } catch (error) {
-      res.status(400).send(error)
-    }
+      .then((result) => {
+        res.status(201).json({
+          status: 201,
+          message: 'product has been added',
+          data: result
+        })
+      })
+      .catch((err) => {
+        res.status(400).send(err)
+      })
   }
 
   static async updateProduct (req, res) {
@@ -63,8 +64,8 @@ module.exports = class {
         message: 'car data has been update',
         data: req.body
       })
-    } catch (error) {
-      res.status(400).send(error)
+    } catch (err) {
+      res.status(400).send(err)
     }
   }
 

@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -8,4 +8,4 @@ router.get('/', function (req, res, next) {
 router.use('/users', require('./user'))
 router.use('/product', require('./product'))
 
-module.exports = router
+module.exports = router;
