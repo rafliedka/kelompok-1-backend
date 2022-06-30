@@ -13,8 +13,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   transaction.init(
     {
-      user_id: DataTypes.INTEGER,
+      seller_id: DataTypes.INTEGER,
       product_id: DataTypes.INTEGER,
+      buyer_id: DataTypes.INTEGER,
       status: DataTypes.STRING,
       offer: DataTypes.INTEGER
     },
@@ -25,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   )
   transaction.associate = function (models) {
     transaction.belongsTo(models.product, { foreignKey: 'product_id' })
-    transaction.belongsTo(models.user, { foreignKey: 'user_id' })
+    transaction.belongsTo(models.user, { foreignKey: 'buyer_id' })
   }
   return transaction
 }
