@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      seller_id: {
         type: Sequelize.INTEGER,
         /* references: {
           model: {
@@ -23,6 +23,16 @@ module.exports = {
         /* references: {
           model: {
             tableName: 'products'
+          },
+          key: 'id'
+        }, */
+        allowNull: false
+      },
+      buyer_id: {
+        type: Sequelize.INTEGER,
+        /* references: {
+          model: {
+            tableName: 'users'
           },
           key: 'id'
         }, */

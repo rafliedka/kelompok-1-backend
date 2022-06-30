@@ -61,7 +61,7 @@ module.exports = class {
     try {
       res.status(201).json({
         status: 201,
-        message: 'car data has been update',
+        message: 'product data has been update',
         data: req.body
       })
     } catch (err) {
