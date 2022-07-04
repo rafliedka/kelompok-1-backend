@@ -16,7 +16,7 @@ module.exports = class {
   }
 
   static async getProductById (req, res) {
-    const result = await product.findOne({ where: { id: req.params.id } })
+    const result = await product.findOne({ where: { id: req.params.id }, include: { model: user } })
     try {
       res.status(200).json({
         status: 200,
@@ -35,7 +35,8 @@ module.exports = class {
         price: req.body.price,
         category: req.body.category,
         description: req.body.description,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        avalilable: true
       })
       .then((result) => {
         res.status(201).json({
@@ -53,7 +54,7 @@ module.exports = class {
     await product.update({
       name: req.body.name,
       description: req.body.description,
-      image: req.body.image,
+      image: req.file.path,
       price: req.body.price,
       category: req.body.category,
       user_id: req.body.user_id
