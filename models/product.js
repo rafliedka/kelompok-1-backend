@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
       price: DataTypes.INTEGER,
       category: DataTypes.STRING,
-      user_id: DataTypes.INTEGER
+      user_id: DataTypes.INTEGER,
+      avalilable: DataTypes.BOOLEAN
     },
     {
       sequelize,
@@ -27,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   )
   product.associate = function (models) {
     product.belongsTo(models.user, { foreignKey: 'user_id' })
-    product.hasOne(models.transaction)
+    product.hasOne(models.transaction, { foreignKey: 'id' })
   }
   return product
 }
