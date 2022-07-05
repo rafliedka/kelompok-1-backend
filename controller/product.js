@@ -51,19 +51,19 @@ module.exports = class {
   }
 
   static async updateProduct (req, res) {
-    await product.update({
+    const result = await product.update({
       name: req.body.name,
       description: req.body.description,
       image: req.file.path,
       price: req.body.price,
       category: req.body.category,
       user_id: req.body.user_id
-    }, { where: { id: req.params.id } })
+    }, { where: { id: req.params.id }, returning: true })
     try {
       res.status(201).json({
         status: 201,
         message: 'product data has been update',
-        data: req.body
+        data: result
       })
     } catch (err) {
       res.status(400).send(err)
