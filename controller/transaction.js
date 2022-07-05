@@ -3,10 +3,10 @@ const { transaction, product } = require('../models')
 module.exports = class {
   static async getTransaction (req, res) {
     try {
-      const sourceTransaction = await transaction.findOne({ where: { id: req.params.id }, include: { model: product } })
+      const result = await transaction.findOne({ where: { id: req.params.id }, include: { model: product } })
       res.status(201).send({
         status: 201,
-        data: sourceTransaction
+        data: result
       })
     } catch (error) {
     }
@@ -15,8 +15,6 @@ module.exports = class {
   static async addOffer (req, res) {
     try {
       const sourceProduct = await product.findOne({ where: { id: req.params.id } })
-      // const verify = await transaction.findAll({ where: { product_id: req.params.id, buyer_id: req.userlogin.id }})
-
       if (sourceProduct.user_id === req.userlogin.id) {
         return (
           res.status(400).json({
@@ -33,11 +31,12 @@ module.exports = class {
         )
       }
 
+      console.log(req.body)
       const result = await transaction.create({
         seller_id: sourceProduct.user_id,
         product_id: req.params.id,
         buyer_id: req.userlogin.id,
-        status: 1,
+        status: 0,
         offer: req.body.offer
       })
       res.status(201).send({
@@ -55,17 +54,18 @@ module.exports = class {
 
   static async acceptOffer (req, res) {
     try {
-      const accept = await transaction.update({
-        status: 2
+      const result = await transaction.update({
+        status: 1
       }, {
         where: {
           id: req.params.id
-        }
+        },
+        returning: true
       })
-      res.status(201).send({
+      res.status(201).json({
         status: 201,
         message: 'offer accepted',
-        data: accept
+        data: result
       })
     } catch (error) {
       res.status(400).send({
@@ -75,19 +75,20 @@ module.exports = class {
     }
   }
 
-  static async rejecttOffer (req, res) {
+  static async rejectOffer (req, res) {
     try {
-      const reject = await transaction.update({
+      const result = await transaction.update({
         status: 2
       }, {
         where: {
           id: req.params.id
-        }
+        },
+        returning: true
       })
       res.status(201).send({
         status: 201,
-        message: 'offer rejected',
-        data: reject
+        message: 'offer accepted',
+        data: result
       })
     } catch (error) {
       res.status(400).send({

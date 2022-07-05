@@ -27,6 +27,6 @@ const upload = multer({ storage }) */
 router.get('/offer/:id', auth, TransactionController.getTransaction)
 router.post('/offer/:id', auth, TransactionController.addOffer)
 router.put('/offer/accept/:id', sellerAuth, TransactionController.acceptOffer)
-router.put('/offer/reject/:id', sellerAuth, TransactionController.rejecttOffer)
+router.put('/offer/reject/:id', sellerAuth, TransactionController.rejectOffer)
 
 module.exports = router
