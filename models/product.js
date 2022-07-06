@@ -28,7 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     product.belongsTo(models.user, {
       foreignKey: 'user_id'
     })
-    product.hasOne(models.transaction)
+    product.hasOne(models.transaction, {
+      foreignKey: 'id'
+    })
   }
   return product
 }

@@ -7,5 +7,6 @@ router.get('/', function (req, res, next) {
 })
 router.use('/users', require('./user'))
 router.use('/product', require('./product'))
+router.use('/product', require('./transaction'))
 
 module.exports = router
