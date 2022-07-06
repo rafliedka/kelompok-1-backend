@@ -1,5 +1,7 @@
 'use strict'
-const { Model } = require('sequelize')
+const {
+  Model
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class product extends Model {
     /**
@@ -11,23 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     } */
   }
-  product.init(
-    {
-      name: DataTypes.STRING,
-      description: DataTypes.STRING,
-      image: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      category: DataTypes.STRING,
-      user_id: DataTypes.INTEGER
-    },
-    {
-      sequelize,
-      modelName: 'product'
-    }
-  )
-  product.associate = function (models) {
-    product.belongsTo(models.user, { foreignKey: 'user_id' })
-    product.hasOne(models.transaction, { foreignKey: 'id' })
+  product.init({
+    name: DataTypes.STRING,
+    description: DataTypes.STRING,
+    image: DataTypes.STRING,
+    price: DataTypes.INTEGER,
+    category: DataTypes.STRING,
+    user_id: DataTypes.INTEGER
+  }, {
+    sequelize,
+    modelName: 'product'
+  })
+  product.associate = function(models) {
+    product.belongsTo(models.user, {
+      foreignKey: 'user_id'
+    })
+    product.hasOne(models.transaction, {
+      foreignKey: 'id'
+    })
   }
   return product
 }
