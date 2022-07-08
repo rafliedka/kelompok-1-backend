@@ -20,17 +20,8 @@ module.exports = class {
     }
   }
 
-<<<<<<< HEAD
-  static async getProductById(req, res) {
-    const result = await product.findOne({
-      where: {
-        id: req.params.id
-      }
-    })
-=======
   static async getProductById (req, res) {
     const result = await product.findOne({ where: { id: req.params.id }, include: { model: user } })
->>>>>>> e3f173633a3457d50e5cfe3a2e5efcebb59010d5
     try {
       res.status(200).json({
         status: 200,
@@ -64,28 +55,15 @@ module.exports = class {
       })
   }
 
-<<<<<<< HEAD
-  static async updateProduct(req, res) {
-    await product.update({
-=======
   static async updateProduct (req, res) {
     const result = await product.update({
->>>>>>> e3f173633a3457d50e5cfe3a2e5efcebb59010d5
       name: req.body.name,
       description: req.body.description,
       image: req.file.path,
       price: req.body.price,
       category: req.body.category,
       user_id: req.body.user_id
-<<<<<<< HEAD
-    }, {
-      where: {
-        id: req.params.id
-      }
-    })
-=======
     }, { where: { id: req.params.id }, returning: true })
->>>>>>> e3f173633a3457d50e5cfe3a2e5efcebb59010d5
     try {
       res.status(201).json({
         status: 201,
