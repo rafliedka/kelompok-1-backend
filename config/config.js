@@ -4,17 +4,11 @@
  */
 
 /** Destruct environment variable to get database configuration */
-const path = require("path");
-require("dotenv").config(__dirname + "/../.env");
+const path = require('path');
+require('dotenv').config(__dirname + '/../.env');
 
-const DB_TEST_FILE_PATH = path.join(__dirname, "../db/test.sqlite");
-const {
-  DB_USERNAME,
-  DB_PASSWORD,
-  DB_HOST,
-  DB_NAME,
-  DB_PORT
-} = process.env;
+const DB_TEST_FILE_PATH = path.join(__dirname, '../db/test.sqlite');
+const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
 module.exports = {
   // Elephant SQL
@@ -24,14 +18,14 @@ module.exports = {
     database: DB_NAME,
     host: DB_HOST,
     port: DB_PORT,
-    dialect: "postgres",
+    dialect: 'postgres',
     ssl: true,
   },
   // SQLite
   test: {
     storage: DB_TEST_FILE_PATH,
     logging: false,
-    dialect: "sqlite",
+    dialect: 'sqlite',
   },
   // Heroku Postgres
   production: {
@@ -40,7 +34,7 @@ module.exports = {
     database: DB_NAME,
     host: DB_HOST,
     port: DB_PORT,
-    dialect: "postgres",
+    dialect: 'postgres',
     ssl: true,
     dialectOptions: {
       ssl: {
