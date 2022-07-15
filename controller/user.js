@@ -104,7 +104,6 @@ module.exports = class {
               role: 'buyer',
             })
             .then((result) => {
-              // generate token register
               const token = jwt.generateToken({
                 email: user.email,
                 password: user.password,

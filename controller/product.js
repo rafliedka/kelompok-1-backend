@@ -1,9 +1,14 @@
-const { product, user } = require('../models')
+const {
+  product,
+  user
+} = require('../models')
 
 module.exports = class {
-  static async getAllProduct (req, res) {
+  static async getAllProduct(req, res) {
     const result = await product.findAll({
-      include: [{ model: user }]
+      include: [{
+        model: user
+      }]
     })
     try {
       res.status(200).json({
@@ -16,7 +21,7 @@ module.exports = class {
   }
 
   static async getProductById (req, res) {
-    const result = await product.findOne({ where: { id: req.params.id } })
+    const result = await product.findOne({ where: { id: req.params.id }, include: { model: user } })
     try {
       res.status(200).json({
         status: 200,
@@ -27,7 +32,7 @@ module.exports = class {
     }
   }
 
-  static async addProduct (req, res) {
+  static async addProduct(req, res) {
     product
       .create({
         name: req.body.name,
@@ -35,7 +40,8 @@ module.exports = class {
         price: req.body.price,
         category: req.body.category,
         description: req.body.description,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        avalilable: true
       })
       .then((result) => {
         res.status(201).json({
@@ -50,27 +56,31 @@ module.exports = class {
   }
 
   static async updateProduct (req, res) {
-    await product.update({
+    const result = await product.update({
       name: req.body.name,
       description: req.body.description,
-      image: req.body.image,
+      image: req.file.path,
       price: req.body.price,
       category: req.body.category,
       user_id: req.body.user_id
-    }, { where: { id: req.params.id } })
+    }, { where: { id: req.params.id }, returning: true })
     try {
       res.status(201).json({
         status: 201,
         message: 'product data has been update',
-        data: req.body
+        data: result
       })
     } catch (err) {
       res.status(400).send(err)
     }
   }
 
-  static async deleteProduct (req, res) {
-    await product.destroy({ where: { id: req.params.id } })
+  static async deleteProduct(req, res) {
+    await product.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
     try {
       res.status(204).json({
         staus: 204,
