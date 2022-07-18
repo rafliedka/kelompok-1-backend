@@ -3,31 +3,29 @@ const router = express.Router()
 const UserController = require('../controller/user')
 const auth = require('../middleware/authentication')
 
-// Multer User
+// cloudinary
+const cloudinary = require('cloudinary').v2
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
 const multer = require('multer')
-const path = require('path')
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/photoUser')
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: (req, file) => 'users',
+    format: async (req, file) => {
+      return 'jpeg'
+    },
+    public_id: (req, file) => req.params.id
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
-  }
-})
-const upload = multer({ storage })
+});
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
+const parser = multer({ storage })
 
 router.get('/', UserController.getAllUser)
 router.get('/:id', auth, UserController.fetchUserId)
 router.post('/register', UserController.regisUser)
 router.post('/login', UserController.loginUser)
-router.put('/:id', auth, upload.single('photo'), UserController.updateUser)
+router.put('/:id', auth, parser.single('photo'), UserController.updateUser)
 router.delete('/:id', UserController.deleteUser)
 
 module.exports = router
