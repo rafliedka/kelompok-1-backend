@@ -3,22 +3,7 @@ const router = express.Router()
 const ProductController = require('../controller/product')
 const sellerAuth = require('../middleware/isSeller')
 
-/* const cloudinary = require('cloudinary').v2
-const { CloudinaryStorage } = require('multer-storage-cloudinary')
-const multer = require('multer')
-
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'product',
-    format: async (req, file) => 'jpg', // supports promises as well
-    public_id: (req, file) => req.params.id
-  }
-})
-
-const parser = multer({ storage }) */
-
-// Multer User
+// Multer Product
 const multer = require('multer')
 const path = require('path')
 
@@ -31,9 +16,14 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
   }
 })
-const upload = multer({ storage })
+const upload = multer({
+  storage
+})
 
-module.exports = upload
+/* GET users listing. */
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 router.get('/', ProductController.getAllProduct)
 router.get('/:id', sellerAuth, ProductController.getProductById)

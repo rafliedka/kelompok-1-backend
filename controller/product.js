@@ -4,7 +4,7 @@ const {
 } = require('../models')
 
 module.exports = class {
-  static async getAllProduct (req, res) {
+  static async getAllProduct(req, res) {
     const result = await product.findAll({
       include: [{
         model: user
@@ -32,7 +32,7 @@ module.exports = class {
     }
   }
 
-  static async addProduct (req, res) {
+  static async addProduct(req, res) {
     product
       .create({
         name: req.body.name,
@@ -75,7 +75,7 @@ module.exports = class {
     }
   }
 
-  static async deleteProduct (req, res) {
+  static async deleteProduct(req, res) {
     await product.destroy({
       where: {
         id: req.params.id
