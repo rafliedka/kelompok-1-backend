@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www"
   },
+  "postinstall": "ng build --aot --prod",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
