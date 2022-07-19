@@ -30,9 +30,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname + 'public'))
-});
+app.get('*', function (req, res) {
+  const index = path.join(__dirname + 'public')
+  res.sendFile(index)
+})
 
 app.use('/', indexRouter)
 // app.use('/users', usersRouter);
