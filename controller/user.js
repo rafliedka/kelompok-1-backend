@@ -1,9 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const { user } = require('../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('../helper/jwt')
 // const upload = require('../helper/multer')
 // const { uploader } = require('../helper/cloudinary')
+=======
+const { user } = require('../models');
+const bcrypt = require('bcryptjs');
+const jwt = require('../helper/jwt');
+>>>>>>> parent of 20a5663 (add cloudinary)
 =======
 const { user } = require('../models');
 const bcrypt = require('bcryptjs');
@@ -61,7 +67,11 @@ module.exports = class {
           },
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
       )
+=======
+      );
+>>>>>>> parent of 20a5663 (add cloudinary)
 =======
       );
 >>>>>>> parent of 20a5663 (add cloudinary)
