@@ -15,7 +15,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-const indexRouter = require('./routes/index')
+// const indexRouter = require('./routes/index')
 // var usersRouter = require('./routes/users');
 
 const app = express()
@@ -30,12 +30,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
-app.get('*', function (req, res) {
+/* app.get('*', function (req, res) {
   const index = path.join(__dirname + 'public')
   res.sendFile(index)
 })
 
-app.use('/', indexRouter)
+app.use('/', indexRouter) */
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
