@@ -1,8 +1,8 @@
 const { user } = require('../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('../helper/jwt')
-const upload = require('../helper/multer')
-const { uploader } = require('../helper/cloudinary')
+// const upload = require('../helper/multer')
+// const { uploader } = require('../helper/cloudinary')
 
 module.exports = class {
   // get user data
@@ -56,7 +56,6 @@ module.exports = class {
           returning: true
         }
       )
-      upload
       res.status(201).json({
         status: 201,
         message: 'user data has been update',
