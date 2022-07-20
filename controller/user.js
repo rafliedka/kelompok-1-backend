@@ -37,26 +37,27 @@ module.exports = class {
   // error update ke password yang sama jadi hashing 2 kali
   static async updateUser(req, res) {
     try {
-      await user.update(
+      const result = await user.update(
         {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
           contact: req.body.contact,
-          photo: req.body.photo,
+          photo: req.file.path,
           address: req.body.address,
           role: 'seller'
         },
         {
           where: {
             id: req.params.id
-          }
+          },
+          returning: true
         }
       )
       res.status(201).json({
         status: 201,
         message: 'user data has been update',
-        data: req.body
+        data: result
       })
     } catch (error) {
       res.status(400).send(error)
