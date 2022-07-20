@@ -43,15 +43,12 @@ module.exports = class {
           email: req.body.email,
           password: req.body.password,
           contact: req.body.contact,
-          photo: req.file.path,
+          photo: req.body.photo,
           address: req.body.address,
           role: 'seller'
         },
         {
-          where: {
-            id: req.params.id
-          },
-          returning: true
+          where: req.userlogin, returning: true
         }
       )
       res.status(201).json({

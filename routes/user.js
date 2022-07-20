@@ -40,7 +40,7 @@ router.get('/', UserController.getAllUser)
 router.get('/:id', auth, UserController.fetchUserId)
 router.post('/register', UserController.regisUser)
 router.post('/login', UserController.loginUser)
-router.put('/:id', auth, upload.single('photo'), UserController.updateUser)
+router.put('/', auth, upload.single('photo'), UserController.updateUser)
 router.delete('/:id', UserController.deleteUser)
 
 module.exports = router
