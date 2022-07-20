@@ -1,12 +1,10 @@
 const { user } = require('../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('../helper/jwt')
-// const upload = require('../helper/multer')
-// const { uploader } = require('../helper/cloudinary')
 
 module.exports = class {
   // get user data
-  static async getAllUser (req, res) {
+  static async getAllUser(req, res) {
     try {
       const result = await user.findAll()
       res.status(200).json({
@@ -19,7 +17,7 @@ module.exports = class {
   }
 
   // fetch id user
-  static async fetchUserId (req, res) {
+  static async fetchUserId(req, res) {
     try {
       const result = await user.findOne({
         where: {
@@ -37,36 +35,35 @@ module.exports = class {
 
   // update user
   // error update ke password yang sama jadi hashing 2 kali
-  static async updateUser (req, res) {
+  static async updateUser(req, res) {
     try {
-      const result = await user.update(
+      await user.update(
         {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
           contact: req.body.contact,
-          photo: req.file.path,
+          photo: req.body.photo,
           address: req.body.address,
           role: 'seller'
         },
         {
           where: {
             id: req.params.id
-          },
-          returning: true
+          }
         }
       )
       res.status(201).json({
         status: 201,
         message: 'user data has been update',
-        data: { result }
+        data: req.body
       })
     } catch (error) {
       res.status(400).send(error)
     }
   }
 
-  static async deleteUser (req, res) {
+  static async deleteUser(req, res) {
     await user.destroy({
       where: {
         id: req.params.id
@@ -86,7 +83,7 @@ module.exports = class {
   }
 
   // Register
-  static async regisUser (req, res, next) {
+  static async regisUser(req, res, next) {
     const passwordHash = await bcrypt.hash(req.body.password, 10)
     user
       .findOne({
@@ -136,7 +133,7 @@ module.exports = class {
   }
 
   // Login
-  static async loginUser (req, res, next) {
+  static async loginUser(req, res, next) {
     try {
       // check user with email
       const users = await user.findOne({

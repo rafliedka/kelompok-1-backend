@@ -5,15 +5,21 @@ const sellerAuth = require('../middleware/isSeller')
 
 /* const cloudinary = require('cloudinary').v2
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
+// Multer Product
 const multer = require('multer')
+const path = require('path')
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'product',
-    format: async (req, file) => 'jpg', // supports promises as well
-    public_id: (req, file) => req.params.id
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'public/photoProduct')
+  },
+  filename: function(req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
   }
+})
+const upload = multer({
+  storage
 })
 
 const parser = multer({ storage }) */
