@@ -59,7 +59,7 @@ module.exports = class {
     const result = await product.update({
       name: req.body.name,
       description: req.body.description,
-      image: req.file.path,
+      image: req.body.image,
       price: req.body.price,
       category: req.body.category,
       user_id: req.body.user_id
