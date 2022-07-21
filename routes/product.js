@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const ProductController = require('../controller/product')
-const sellerAuth = require('../middleware/isSeller')
+// const sellerAuth = require('../middleware/isSeller')
+const auth = require('../middleware/authentication')
 
 // cloudinary
 /* const cloudinary = require('cloudinary').v2
@@ -37,9 +38,9 @@ const upload = multer({
 })
 
 router.get('/', ProductController.getAllProduct)
-router.get('/:id', sellerAuth, ProductController.getProductById)
-router.post('/', sellerAuth, upload.single('image'), ProductController.addProduct)
-router.put('/:id', sellerAuth, upload.single('image'), ProductController.updateProduct)
-router.delete('/:id', sellerAuth, ProductController.deleteProduct)
+router.get('/:id', auth, ProductController.getProductById)
+router.post('/', auth, upload.single('image'), ProductController.addProduct)
+router.put('/:id', auth, upload.single('image'), ProductController.updateProduct)
+router.delete('/:id', auth, ProductController.deleteProduct)
 
 module.exports = router
