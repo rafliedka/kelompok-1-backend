@@ -34,7 +34,6 @@ module.exports = class {
   }
 
   // update user
-  // error update ke password yang sama jadi hashing 2 kali
   static async updateUser(req, res) {
     try {
       const result = await user.update(
@@ -48,7 +47,7 @@ module.exports = class {
           role: 'seller'
         },
         {
-          where: req.userlogin, returning: true
+          where: { id: req.params.id }, returning: true
         }
       )
       res.status(201).json({
