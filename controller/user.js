@@ -83,7 +83,37 @@ module.exports = class {
   // Register
   static async regisUser(req, res, next) {
     const passwordHash = await bcrypt.hash(req.body.password, 10)
-    user
+    try {
+      const users = await user.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: passwordHash,
+        contact: req.body.contact,
+        photo: req.body.photo,
+        address: req.body.address,
+        role: 'buyer'
+      })
+
+      // generate token user with jwt
+      const token = jwt.generateToken({
+        id: users.id,
+        email: users.email,
+        password: users.password,
+        role: users.role
+      })
+
+      res.status(201).send({
+        status: 201,
+        message: 'User Succesfully Registered!',
+        data: {
+          user: users,
+          token
+        }
+      })
+    } catch (error) {
+      res.status(404).send(error)
+    }
+    /* user
       .findOne({
         where: {
           email: req.body.email
@@ -127,7 +157,7 @@ module.exports = class {
       })
       .catch((err) => {
         res.status(400).send(err)
-      })
+      }) */
   }
 
   // Login
@@ -159,8 +189,10 @@ module.exports = class {
 
       // generate token user with jwt
       const token = jwt.generateToken({
+        id: users.id,
         email: users.email,
-        password: users.password
+        password: users.password,
+        role: users.role
       })
 
       const secureUser = users.dataValues

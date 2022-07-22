@@ -14,8 +14,10 @@ module.exports = async (req, res, next) => {
 
     const User = await user.findOne({
       where: {
+        id: payload.id,
         email: payload.email,
-        password: payload.password
+        password: payload.password,
+        role: payload.role
       }
     })
 
