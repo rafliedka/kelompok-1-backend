@@ -43,6 +43,7 @@ module.exports = class {
           password: req.body.password,
           contact: req.body.contact,
           photo: req.body.photo,
+          city: req.body.city,
           address: req.body.address,
           role: 'seller'
         },
@@ -89,6 +90,7 @@ module.exports = class {
         password: passwordHash,
         contact: req.body.contact,
         photo: req.body.photo,
+        city: req.body.city,
         address: req.body.address,
         role: 'buyer'
       })
@@ -174,6 +176,7 @@ module.exports = class {
           message: 'User Not Found'
         })
       }
+      
 
       // check user with password
       const isValidPassword = await bcrypt.compare(req.body.password, users.password)
