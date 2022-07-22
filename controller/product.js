@@ -35,7 +35,7 @@ module.exports = class {
     product
       .create({
         name: req.body.name,
-        image: req.file.path,
+        image: req.body.image,
         price: req.body.price,
         category: req.body.category,
         description: req.body.description,
