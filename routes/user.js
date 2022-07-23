@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const UserController = require('../controller/user')
-const auth = require('../middleware/authentication')
+// const auth = require('../middleware/authentication')
 
 // cloudinary
 /* const cloudinary = require('cloudinary').v2
@@ -37,7 +37,7 @@ const upload = multer({
 })
 
 router.get('/', UserController.getAllUser)
-router.get('/:id', auth, UserController.fetchUserId)
+router.get('/:id', UserController.fetchUserId)
 router.post('/register', UserController.regisUser)
 router.post('/login', UserController.loginUser)
 router.put('/update/:id', upload.single('photo'), UserController.updateUser)
